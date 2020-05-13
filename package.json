@@ -1,0 +1,18 @@
+{
+  "name": "fakerquiz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://khuhub.khu.ac.kr/2019102225/FakerQuiz.git"
+  },
+  "author": "Jeon segye",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
