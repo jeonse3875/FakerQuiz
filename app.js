@@ -109,7 +109,35 @@ getHTML()
             list: competitionList
         }
         //#endregion
-        
+
+        //#region 챔피언 별 전적
+        var tr = $('div.scriptorium').children('div.listTable').eq(4).find('table tbody').children();
+        var championData = {};
+
+        tr.each(function (i, elem) {
+            var td = $(this).children();
+            var championName = td.eq(0).text();
+
+            championData[championName] = {
+                name: championName,
+                totalGamePlay: td.eq(1).text(),
+                totalWin: td.eq(2).text(),
+                totalLose: td.eq(3).text(),
+                winRate: td.eq(4).text(),
+                totalKill: td.eq(5).text(),
+                totalDeath: td.eq(6).text(),
+                totalAssist: td.eq(7).text(),
+                killPerMatch: td.eq(8).text(),
+                deathPerMatch: td.eq(9).text(),
+                assistPerMatch: td.eq(10).text(),
+                kDA: td.eq(11).text(),
+                kP: td.eq(12).text()
+            }
+        });
+
+        fakerData['champions'] = championData;
+        //#endregion
+
         return fakerData;
     })
     .then(res => console.log(res));
