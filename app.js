@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const app = express();
 const port = 80;
@@ -18,6 +19,10 @@ const getHTML = async () => {
 
 getHTML()
     .then(html => {
+        var today = new Date();
+        var dateInfo = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
+        fakerData['date'] = dateInfo;
+
         const $ = cheerio.load(html.data);
 
         //#region LCK 통산 전적
@@ -138,10 +143,13 @@ getHTML()
 
         fakerData['champions'] = championData;
         //#endregion
-
+        
         return fakerData;
     })
-    .then(res => console.log(res));
+    .then(res => {
+        console.log(res)
+        fs.writeFileSync('data.json', JSON.stringify(res));
+    });
 
 app.get('/', (req, res) => {
     res.send('Express Test');
