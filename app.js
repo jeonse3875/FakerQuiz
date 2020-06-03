@@ -49,7 +49,7 @@ getHTML()
                 played: $(this).find('div.play_area p.value').text(),
                 record: $(this).find('div.log_area p.value').text(),
                 kDA: $(this).find('div.kda_area p.value').text()
-            }
+            };
         });
 
         fakerData['recentLCK'] = {
@@ -82,6 +82,34 @@ getHTML()
             kP: td.eq(11).text()
         }
         //#endregion
+        
+        //#region 대회 별 전적
+        var tr = $('div.scriptorium').children('div.listTable').eq(3).find('table tbody').children();
+        var competitionList = [];
+
+        tr.each(function (i,elem) {
+            competitionList[i] = {
+                name: $(this).children().eq(0).text().replace($(this).children().eq(0).find('span').text(), ''),
+                totalGamePlay: $(this).children().eq(1).text(),
+                totalWin: $(this).children().eq(2).text(),
+                totalLose: $(this).children().eq(3).text(),
+                winRate: $(this).children().eq(4).text(),
+                totalKill: $(this).children().eq(5).text(),
+                totalDeath: $(this).children().eq(6).text(),
+                totalAssist: $(this).children().eq(7).text(),
+                killPerMatch: $(this).children().eq(8).text(),
+                deathPerMatch: $(this).children().eq(9).text(),
+                assistPerMatch: $(this).children().eq(10).text(),
+                kDA: $(this).children().eq(11).text(),
+                kP: $(this).children().eq(12).text()
+            };
+        });
+
+        fakerData['competitions'] = {
+            list: competitionList
+        }
+        //#endregion
+        
         return fakerData;
     })
     .then(res => console.log(res));
