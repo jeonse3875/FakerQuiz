@@ -64,6 +64,24 @@ getHTML()
         };
         //#endregion
 
+        //#region 통산 전적
+        var td = $('div.scriptorium').children('div.listTable').eq(1).find('table tbody tr').children();
+
+        fakerData['fullCareer'] = {
+            totalGamePlay: td.eq(0).text(),
+            totalWin: td.eq(1).text(),
+            totalLose: td.eq(2).text(),
+            winRate: td.eq(3).text(),
+            totalKill: td.eq(4).text(),
+            totalDeath: td.eq(5).text(),
+            totalAssist: td.eq(6).text(),
+            killPerMatch: td.eq(7).text(),
+            deathPerMatch: td.eq(8).text(),
+            assistPerMatch: td.eq(9).text(),
+            kDA: td.eq(10).text(),
+            kP: td.eq(11).text()
+        }
+        //#endregion
         return fakerData;
     })
     .then(res => console.log(res));
