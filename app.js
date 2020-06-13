@@ -42,6 +42,9 @@ function getData() {
 
         const $ = cheerio.load(html.data);
 
+        var playerName = $('div#lolMain h2.block.name').text().split(' ');
+        fakerData['name'] = playerName[playerName.length - 1];
+
         //#region LCK 통산 전적
         var tr = $('table.table.log_list.log01 tbody').children();
         var td = tr.eq(0).children();
