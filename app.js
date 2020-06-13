@@ -9,6 +9,21 @@ const url = 'http://lol.inven.co.kr/dataninfo/proteam/progamer.php?code=135';
 
 var fakerData = {};
 
+function checkData() {
+    try {
+        const dataBuffer = fs.readFileSync('data.json');
+        fakerData = dataBuffer.toJSON();
+        console.log(fakerData);
+    }
+    catch (exception) {
+        console.log(exception);
+        if (exception.code == "ENOENT") {
+            console.log("데이터 파일이 존재하지 않습니다. 데이터를 크롤링합니다.");
+            getData();
+        }
+    }
+}
+
 const getHTML = async () => {
     try {
         return await axios.get(url);
@@ -17,7 +32,8 @@ const getHTML = async () => {
     }
 };
 
-getHTML()
+function getData() {
+    getHTML()
     .then(html => {
         var today = new Date();
         var dateInfo = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
@@ -150,9 +166,13 @@ getHTML()
         console.log(res)
         fs.writeFileSync('data.json', JSON.stringify(res));
     });
+}
+
 
 app.get('/', (req, res) => {
     res.send('Express Test');
 });
 
 app.listen(port, () => console.log(`app listening at http://localhost:${port}`));
+
+checkData();
