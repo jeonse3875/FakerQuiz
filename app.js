@@ -7,6 +7,8 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const url = 'http://lol.inven.co.kr/dataninfo/proteam/progamer.php?code=135';
 
+const version = '0.1';
+
 var fakerData = {};
 
 function checkData() {
@@ -15,6 +17,11 @@ function checkData() {
         console.log("데이터 파일이 존재합니다. 데이터를 읽습니다.");
         fakerData = JSON.parse(dataBuffer.toString());
         console.log(fakerData);
+
+        if(fakerData.version != version){
+            console.log("버전이 다릅니다. 데이터를 크롤링합니다.");
+            getData();
+        }
     }
     catch (exception) {
         console.log(exception);
