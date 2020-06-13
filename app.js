@@ -12,7 +12,8 @@ var fakerData = {};
 function checkData() {
     try {
         const dataBuffer = fs.readFileSync('data.json');
-        fakerData = dataBuffer.toJSON();
+        console.log("데이터 파일이 존재합니다. 데이터를 읽습니다.");
+        fakerData = JSON.parse(dataBuffer.toString());
         console.log(fakerData);
     }
     catch (exception) {
