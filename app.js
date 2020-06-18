@@ -16,6 +16,14 @@ async function checkData() {
     try {
         if (fakerData.version == version) {
             console.log("이미 데이터가 존재합니다.");
+
+            var today = new Date();
+            var dateInfo = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
+            if (fakerData.date != dateInfo)
+            {
+                console.log("오래된 데이터입니다. 데이터를 크롤링합니다.");
+                await getData();
+            }
         }
         else if (fakerData.version == undefined) {
             const dataBuffer = fs.readFileSync(dataFileName);
