@@ -272,6 +272,14 @@ function generateQuiz() {
     info = `${fakerData.recentLCK.name}' KDA : ${recentKP}\nLCK 통산 KDA : ${lckKP}`;
     generateOX(quizO,quizX,info);
     //#endregion
+
+    //#region LCK 통산 경기 수 퀴즈 ox
+    var lckGames = fakerData.lCK.totalGamePlay * 1;
+    quizO = `${fakerData.name}의 LCK 경기수는 ${parseInt(lckGames/10)*10} 경기 이상이다.`;
+    quizX = `${fakerData.name}의 LCK 경기수는 ${parseInt(lckGames/10)*10 + 10} 경기 이상이다.`;
+    info = `${fakerData.name}의 LCK 통산 경기수 : ${lckGames}`;
+    generateOX(quizO,quizX,info);
+    //#endregion
 }
 
 function generateOX(quizO, quizX, moreInfo) {
