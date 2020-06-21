@@ -361,6 +361,16 @@ function generateQuiz() {
     info = `'${firstWinRateChamp.name}' : ${firstWinRateChamp.winRate}\n'${secondWinRateChamp.name}' : ${secondWinRateChamp.winRate}`;
     generateOX(quizO, quizX, info);
     //#endregion
+
+    //#region 모스트 픽 챔피언
+    var firstPickChamp = champions[champList[0]];
+    var secondPickChamp = champions[champList[1]];
+    
+    quizO = `${fakerData.name}가 대회에서 가장 많이 플레이한 챔피언은 '${firstPickChamp.name}'이다. (단, 10게임 이상)`;
+    quizX = `${fakerData.name}가 대회에서 가장 많이 플레이한 챔피언은 '${secondPickChamp.name}'이다. (단, 10게임 이상)`;
+    info = `'${firstPickChamp.name}' : ${firstWinRateChamp.totalGamePlay}게임\n'${secondPickChamp.name}' : ${secondWinRateChamp.totalGamePlay}게임`;
+    generateOX(quizO, quizX, info);
+    //#endregion
 }
 
 function generateOX(quizO, quizX, moreInfo) {
