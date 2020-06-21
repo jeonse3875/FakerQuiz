@@ -1,7 +1,6 @@
 const fs = require('fs');
 const express = require('express');
 const app = express();
-const port = 80;
 
 const axios = require('axios');
 const cheerio = require('cheerio');
@@ -33,8 +32,7 @@ async function checkData() {
 
             var today = new Date();
             var dateInfo = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`;
-            if (fakerData.date != dateInfo)
-            {
+            if (fakerData.date != dateInfo) {
                 console.log("오래된 데이터입니다. 데이터를 크롤링합니다.");
                 await getData();
             }
@@ -228,7 +226,7 @@ function generateQuiz() {
     var quizO = `${fakerData.name}의 '${fakerData.recentLCK.name}' 모스트 픽은 '${mostList[0].champion}'이다.`;
     var quizX = `${fakerData.name}의 '${fakerData.recentLCK.name}' 모스트 픽은 '${mostList[2].champion}'이다.`;
     var info = `${fakerData.name}는 '${fakerData.recentLCK.name}'에서 '${mostList[0].champion}'을 가장 많이 플레이했습니다. (${mostList[0].played}게임)`;
-    generateOX(quizO,quizX,info);
+    generateOX(quizO, quizX, info);
     //#endregion
 
     //#region 최근 LCK 승률 비교 ox
@@ -242,7 +240,7 @@ function generateQuiz() {
         quizX = `${fakerData.name}의 '${fakerData.recentLCK.name}' 승률은 LCK 통산 승률보다 높다.`;
     }
     info = `${fakerData.recentLCK.name}' 승률 : ${recentWinRate}\nLCK 통산 승률 : ${lckWinRate}`;
-    generateOX(quizO,quizX,info);
+    generateOX(quizO, quizX, info);
     //#endregion
 
     //#region 최근 LCK KDA 비교 ox
@@ -256,7 +254,7 @@ function generateQuiz() {
         quizX = `${fakerData.name}의 '${fakerData.recentLCK.name}' KDA는 LCK 통산 KDA보다 높다.`;
     }
     info = `${fakerData.recentLCK.name}' KDA : ${recentKDA}\nLCK 통산 KDA : ${lckKDA}`;
-    generateOX(quizO,quizX,info);
+    generateOX(quizO, quizX, info);
     //#endregion
 
     //#region 최근 LCK 킬관여율 비교 ox
@@ -270,28 +268,28 @@ function generateQuiz() {
         quizX = `${fakerData.name}의 '${fakerData.recentLCK.name}' 킬관여율은 LCK 통산 킬관여율보다 높다.`;
     }
     info = `${fakerData.recentLCK.name}' 킬관여율 : ${recentKP}\nLCK 통산 킬관여율 : ${lckKP}`;
-    generateOX(quizO,quizX,info);
+    generateOX(quizO, quizX, info);
     //#endregion
 
     //#region LCK 통산 경기 수 퀴즈 ox
     var lckGames = fakerData.lCK.totalGamePlay * 1;
-    quizO = `${fakerData.name}의 LCK 경기 수는 ${parseInt(lckGames/10)*10} 경기 이상이다.`;
-    quizX = `${fakerData.name}의 LCK 경기 수는 ${parseInt(lckGames/10)*10 + 10} 경기 이상이다.`;
+    quizO = `${fakerData.name}의 LCK 경기 수는 ${parseInt(lckGames / 10) * 10} 경기 이상이다.`;
+    quizX = `${fakerData.name}의 LCK 경기 수는 ${parseInt(lckGames / 10) * 10 + 10} 경기 이상이다.`;
     info = `${fakerData.name}의 LCK 통산 경기 수 : ${lckGames}`;
-    generateOX(quizO,quizX,info);
+    generateOX(quizO, quizX, info);
     //#endregion
 
     //#region LCK 경기당 킬 퀴즈 ox
     var lckKM = fakerData.lCK.killPerMatch * 1;
     quizO = `${fakerData.name}의 LCK 경기 당 킬은 ${parseInt(lckKM)} 킬 이상이다.`;
-    quizX = `${fakerData.name}의 LCK 경기 당 킬은 ${parseInt(lckKM)+1} 킬 이상이다.`;
+    quizX = `${fakerData.name}의 LCK 경기 당 킬은 ${parseInt(lckKM) + 1} 킬 이상이다.`;
     info = `${fakerData.name}의 LCK 경기 당 킬 : ${lckKM}`;
     generateOX(quizO, quizX, info);
     //#endregion
 
     //#region LCK 경기당 데스 퀴즈 ox
     var lckDM = fakerData.lCK.deathPerMatch * 1;
-    quizO = `${fakerData.name}의 LCK 경기 당 데스는 ${parseInt(lckDM)+1} 데스 이하이다.`;
+    quizO = `${fakerData.name}의 LCK 경기 당 데스는 ${parseInt(lckDM) + 1} 데스 이하이다.`;
     quizX = `${fakerData.name}의 LCK 경기 당 데스는 ${parseInt(lckDM)} 데스 이하이다.`;
     info = `${fakerData.name}의 LCK 경기 당 데스 : ${lckDM}`;
     generateOX(quizO, quizX, info);
@@ -306,17 +304,17 @@ function generateQuiz() {
     //#endregion
 
     //#region LCK 킬관여율 퀴즈 ox
-    var lckKP = fakerData.lCK.kP.replace('%','')*1;
-    quizO = `${fakerData.name}의 LCK 통산 킬관여율은 ${parseInt(lckKP/10)*10}% 이상이다.`;
-    quizX = `${fakerData.name}의 LCK 통산 킬관여율은 ${parseInt(lckKP/10)*10 + 10}% 이상이다.`;
+    var lckKP = fakerData.lCK.kP.replace('%', '') * 1;
+    quizO = `${fakerData.name}의 LCK 통산 킬관여율은 ${parseInt(lckKP / 10) * 10}% 이상이다.`;
+    quizX = `${fakerData.name}의 LCK 통산 킬관여율은 ${parseInt(lckKP / 10) * 10 + 10}% 이상이다.`;
     info = `${fakerData.name}의 LCK 통산 킬관여율 : ${lckKP}%`;
     generateOX(quizO, quizX, info);
     //#endregion
 
     //#region LCK 승률 퀴즈 ox
-    var lckWR = fakerData.lCK.winRate.replace('%','')*1;
-    quizO = `${fakerData.name}의 LCK 통산 승률은 ${parseInt(lckWR/10)*10}% 이상이다.`;
-    quizX = `${fakerData.name}의 LCK 통산 승률은 ${parseInt(lckWR/10)*10 + 10}% 이상이다.`;
+    var lckWR = fakerData.lCK.winRate.replace('%', '') * 1;
+    quizO = `${fakerData.name}의 LCK 통산 승률은 ${parseInt(lckWR / 10) * 10}% 이상이다.`;
+    quizX = `${fakerData.name}의 LCK 통산 승률은 ${parseInt(lckWR / 10) * 10 + 10}% 이상이다.`;
     info = `${fakerData.name}의 LCK 통산 승률 : ${lckWR}%`;
     generateOX(quizO, quizX, info);
     //#endregion
@@ -336,8 +334,8 @@ function generateQuiz() {
         quizX = `${fakerData.name}는 대회에서 '${rareChampList[champIndex].name}'를 플레이한 적이 없다.`;
         info = `'${rareChampList[champIndex].name}' : ${rareChampList[champIndex].totalGamePlay}게임, ${rareChampList[champIndex].totalWin}승, ${rareChampList[champIndex].kDA}KDA`;
         generateOX(quizO, quizX, info);
-    
-        champList.splice(champIndex,1);
+
+        champList.splice(champIndex, 1);
     }
     //#endregion
 
@@ -365,7 +363,7 @@ function generateQuiz() {
     //#region 모스트 픽 챔피언
     var firstPickChamp = champions[champList[0]];
     var secondPickChamp = champions[champList[1]];
-    
+
     quizO = `${fakerData.name}가 대회에서 가장 많이 플레이한 챔피언은 '${firstPickChamp.name}'이다. (단, 10게임 이상)`;
     quizX = `${fakerData.name}가 대회에서 가장 많이 플레이한 챔피언은 '${secondPickChamp.name}'이다. (단, 10게임 이상)`;
     info = `'${firstPickChamp.name}' : ${firstWinRateChamp.totalGamePlay}게임\n'${secondPickChamp.name}' : ${secondWinRateChamp.totalGamePlay}게임`;
@@ -418,11 +416,11 @@ app.post('/hook', async function (req, res) {
     var message = eventObj.message;
 
     // request log
-    console.log('======================', new Date() ,'======================');
+    console.log('======================', new Date(), '======================');
     console.log('[request]', req.body);
     console.log('[request source] ', eventObj.source);
     console.log('[request message]', eventObj.message);
-    
+
     if (!isWaitAns && eventObj.message.text == '시작') {
         await checkData();
         users[eventObj.source.userId] = {
@@ -444,7 +442,7 @@ app.post('/hook', async function (req, res) {
 });
 
 function sendQuiz(replyToken, id, isInit) {
-    var randomQuiz = quizList[Math.floor(Math.random()*quizList.length)];
+    var randomQuiz = quizList[Math.floor(Math.random() * quizList.length)];
     var quizText = randomQuiz.quiz;
     var messages;
     users[id].quizAns = randomQuiz.ans;
@@ -453,19 +451,19 @@ function sendQuiz(replyToken, id, isInit) {
     if (isInit) {
         messages = [
             {
-                "type":"text",
-                "text":quizText
+                "type": "text",
+                "text": quizText
             }
         ];
     } else {
         messages = [
             {
-                "type":"text",
-                "text":'정답입니다.'
+                "type": "text",
+                "text": '정답입니다.'
             },
             {
-                "type":"text",
-                "text":quizText
+                "type": "text",
+                "text": quizText
             }
         ];
     }
@@ -476,10 +474,10 @@ function sendQuiz(replyToken, id, isInit) {
                 'Authorization': `Bearer ${TOKEN}`
             },
             json: {
-                "replyToken":replyToken,
+                "replyToken": replyToken,
                 "messages": messages
             }
-        },(error, response, body) => {
+        }, (error, response, body) => {
             console.log(body)
         }
     );
@@ -499,7 +497,7 @@ function endQuiz(replyToken, id) {
     isWaitAns = false;
     sumOfTry++;
     sumOfStreak += users[id].streak;
-    var averageStreak = sumOfStreak/sumOfTry;
+    var averageStreak = sumOfStreak / sumOfTry;
     request.post(
         {
             url: TARGET_URL,
@@ -507,27 +505,27 @@ function endQuiz(replyToken, id) {
                 'Authorization': `Bearer ${TOKEN}`
             },
             json: {
-                "replyToken":replyToken,
-                "messages":[
+                "replyToken": replyToken,
+                "messages": [
                     {
-                        "type":"text",
-                        "text":"오답입니다."
+                        "type": "text",
+                        "text": "오답입니다."
                     },
                     {
-                        "type":"text",
-                        "text":users[id].quizInfo
+                        "type": "text",
+                        "text": users[id].quizInfo
                     },
                     {
-                        "type":"text",
-                        "text":`${users[id].streak}문제 연속 정답!\n(유저 평균 : ${averageStreak.toFixed(1)}문제)`
+                        "type": "text",
+                        "text": `${users[id].streak}문제 연속 정답!\n(유저 평균 : ${averageStreak.toFixed(1)}문제)`
                     },
                     {
-                        "type":"text",
-                        "text":"퀴즈를 다시 시작하려면 '시작'을 입력해주세요."
+                        "type": "text",
+                        "text": "퀴즈를 다시 시작하려면 '시작'을 입력해주세요."
                     }
                 ]
             }
-        },(error, response, body) => {
+        }, (error, response, body) => {
             console.log(body)
         }
     );
@@ -535,15 +533,15 @@ function endQuiz(replyToken, id) {
 
 try {
     const option = {
-      ca: fs.readFileSync('/etc/letsencrypt/live/' + domain +'/fullchain.pem'),
-      key: fs.readFileSync(path.resolve(process.cwd(), '/etc/letsencrypt/live/' + domain +'/privkey.pem'), 'utf8').toString(),
-      cert: fs.readFileSync(path.resolve(process.cwd(), '/etc/letsencrypt/live/' + domain +'/cert.pem'), 'utf8').toString(),
+        ca: fs.readFileSync('/etc/letsencrypt/live/' + domain + '/fullchain.pem'),
+        key: fs.readFileSync(path.resolve(process.cwd(), '/etc/letsencrypt/live/' + domain + '/privkey.pem'), 'utf8').toString(),
+        cert: fs.readFileSync(path.resolve(process.cwd(), '/etc/letsencrypt/live/' + domain + '/cert.pem'), 'utf8').toString(),
     };
-  
+
     HTTPS.createServer(option, app).listen(sslport, () => {
-      console.log(`[HTTPS] Server is started on port ${sslport}`);
+        console.log(`[HTTPS] Server is started on port ${sslport}`);
     });
-  } catch (error) {
+} catch (error) {
     console.log('[HTTPS] HTTPS 오류가 발생하였습니다. HTTPS 서버는 실행되지 않습니다.');
     console.log(error);
-  }
+}
