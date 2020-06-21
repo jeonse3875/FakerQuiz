@@ -4,7 +4,7 @@ const app = express();
 
 const axios = require('axios');
 const cheerio = require('cheerio');
-const url = 'http://lol.inven.co.kr/dataninfo/proteam/progamer.php?code=135';// ***url of Other player (if you want)***
+const url = 'http://lol.inven.co.kr/dataninfo/proteam/progamer.php?code=116';// ***url of Other player (if you want)***
 
 const request = require('request');
 const TARGET_URL = 'https://api.line.me/v2/bot/message/reply';
@@ -289,8 +289,8 @@ function generateQuiz() {
 
     //#region LCK 경기당 데스 퀴즈 ox
     var lckDM = fakerData.lCK.deathPerMatch * 1;
-    quizO = `${fakerData.name}의 LCK 경기 당 데스는 ${parseInt(lckDM) + 1} 데스 이하이다.`;
-    quizX = `${fakerData.name}의 LCK 경기 당 데스는 ${parseInt(lckDM)} 데스 이하이다.`;
+    quizO = `${fakerData.name}의 LCK 경기 당 데스는 ${parseInt(lckDM) + 1}보다 작다.`;
+    quizX = `${fakerData.name}의 LCK 경기 당 데스는 ${parseInt(lckDM)}보다 작다.`;
     info = `${fakerData.name}의 LCK 경기 당 데스 : ${lckDM}`;
     generateOX(quizO, quizX, info);
     //#endregion
@@ -366,16 +366,7 @@ function generateQuiz() {
     //#region 모스트 픽 챔피언
     var firstPickChamp = champions[champList[0]];
     var secondPickChamp = champions[champList[1]];
-    for (i = 0; i < champList.length; i++) {
-        if (champions[champList[i]] > secondPickChamp.totalGamePlay) {
-            secondPickChamp = champions[champList[i]];
-            if (secondPickChamp.totalGamePlay > firstPickChamp.totalGamePlay) {
-                var temp = secondPickChamp;
-                secondPickChamp = firstPickChamp;
-                firstPickChamp = temp;
-            }
-        }
-    }
+
     quizO = `${fakerData.name}가 대회에서 가장 많이 플레이한 챔피언은 '${firstPickChamp.name}'이다.`;
     quizX = `${fakerData.name}가 대회에서 가장 많이 플레이한 챔피언은 '${secondPickChamp.name}'이다.`;
     info = `1위. '${firstPickChamp.name}' : ${firstPickChamp.totalGamePlay}게임\n2위. '${secondPickChamp.name}' : ${secondPickChamp.totalGamePlay}게임`;
