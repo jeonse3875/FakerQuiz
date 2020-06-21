@@ -320,6 +320,27 @@ function generateQuiz() {
     info = `${fakerData.name}의 LCK 통산 승률 : ${lckWR}%`;
     generateOX(quizO, quizX, info);
     //#endregion
+
+    //#region 챔피언 플레이 ox
+    var champions = fakerData.champions;
+    var champList = Object.keys(champions);
+    var rareChampList = [];
+    for (i = 0; i < champList.length; i++) {
+        if (champions[champList[i]].totalGamePlay <= 2) {
+            rareChampList.push(champions[champList[i]]);
+        }
+    }
+    for (i = 0; i < 4; i++) {
+        var champIndex = Math.floor(Math.random() * rareChampList.length);
+        quizO = `${fakerData.name}는 대회에서 '${rareChampList[champIndex].name}'를 플레이한 적이 있다.`;
+        quizX = `${fakerData.name}는 대회에서 '${rareChampList[champIndex].name}'를 플레이한 적이 없다.`;
+        info = `'${rareChampList[champIndex].name}' : ${rareChampList[champIndex].totalGamePlay}게임, 
+        ${rareChampList[champIndex].totalWin}승, ${rareChampList[champIndex].kDA}KDA`;
+        generateOX(quizO, quizX, info);
+    
+        champList.splice(champIndex,1);
+    }
+    //#endregion
 }
 
 function generateOX(quizO, quizX, moreInfo) {
