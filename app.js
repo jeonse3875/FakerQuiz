@@ -275,10 +275,18 @@ function generateQuiz() {
 
     //#region LCK 통산 경기 수 퀴즈 ox
     var lckGames = fakerData.lCK.totalGamePlay * 1;
-    quizO = `${fakerData.name}의 LCK 경기수는 ${parseInt(lckGames/10)*10} 경기 이상이다.`;
-    quizX = `${fakerData.name}의 LCK 경기수는 ${parseInt(lckGames/10)*10 + 10} 경기 이상이다.`;
-    info = `${fakerData.name}의 LCK 통산 경기수 : ${lckGames}`;
+    quizO = `${fakerData.name}의 LCK 경기 수는 ${parseInt(lckGames/10)*10} 경기 이상이다.`;
+    quizX = `${fakerData.name}의 LCK 경기 수는 ${parseInt(lckGames/10)*10 + 10} 경기 이상이다.`;
+    info = `${fakerData.name}의 LCK 통산 경기 수 : ${lckGames}`;
     generateOX(quizO,quizX,info);
+    //#endregion
+
+    //#region LCK 경기당 킬 퀴즈 ox
+    var lckKM = fakerData.lCK.killPerMatch * 1;
+    quizO = `${fakerData.name}의 LCK 경기 당 킬은 ${parseInt(lckKM)} 킬 이상이다.`;
+    quizX = `${fakerData.name}의 LCK 경기 당 킬은 ${parseInt(lckKM)+1} 킬 이상이다.`;
+    info = `${fakerData.name}의 LCK 경기 당 킬 : ${lckKM}`;
+    generateOX(quizO, quizX, info);
     //#endregion
 }
 
