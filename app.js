@@ -286,11 +286,13 @@ app.post('/hook', async function (req, res) {
             quizInfo: null
         };
         sendQuiz(eventObj.replyToken, eventObj.source.userId);
-    } else if (isWaitAns && eventObj.message.text == '정답') {
-        users[eventObj.source.userId].streak ++;
-        sendQuiz(eventObj.replyToken, eventObj.source.userId);
-    } else if (isWaitAns && eventObj.message.text == '오답') {
-        endQuiz(eventObj.replyToken, eventObj.source.userId);
+    } else if (isWaitAns) {
+        if (checkAns(eventObj.source.userId, eventObj.message.text)) {
+            users[eventObj.source.userId].streak++;
+            sendQuiz(eventObj.replyToken, eventObj.source.userId);
+        } else {
+            endQuiz(eventObj.replyToken, eventObj.source.userId);
+        }
     }
 
     res.sendStatus(200);
@@ -299,6 +301,9 @@ app.post('/hook', async function (req, res) {
 function sendQuiz(replyToken, id) {
     var randomQuiz = quizList[Math.floor(Math.random()*quizList.length)];
     var quizText = randomQuiz.quiz;
+
+    users[id].quizAns = randomQuiz.ans;
+    users[id].quizInfo = randomQuiz.info;
 
     request.post(
         {
@@ -321,6 +326,14 @@ function sendQuiz(replyToken, id) {
     );
 
     isWaitAns = true;
+}
+
+function checkAns(id, ans) {
+    if (ans.toUpperCase() == users[id].quizAns.toUpperCase()) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 function endQuiz(replyToken, id) {
