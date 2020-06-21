@@ -288,6 +288,14 @@ function generateQuiz() {
     info = `${fakerData.name}의 LCK 경기 당 킬 : ${lckKM}`;
     generateOX(quizO, quizX, info);
     //#endregion
+
+    //#region LCK 경기당 데스 퀴즈 ox
+    var lckDM = fakerData.lCK.deathPerMatch * 1;
+    quizO = `${fakerData.name}의 LCK 경기 당 데스는 ${parseInt(lckDM)+1} 데스 이하이다.`;
+    quizX = `${fakerData.name}의 LCK 경기 당 데스는 ${parseInt(lckDM)} 데스 이하이다.`;
+    info = `${fakerData.name}의 LCK 경기 당 데스 : ${lckDM}`;
+    generateOX(quizO, quizX, info);
+    //#endregion
 }
 
 function generateOX(quizO, quizX, moreInfo) {
