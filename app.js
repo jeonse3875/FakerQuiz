@@ -340,6 +340,9 @@ function generateQuiz() {
     //#endregion
 
     //#region 모스트 승률 챔피언
+    var champions = fakerData.champions;
+    var champList = Object.keys(champions);
+
     var firstWinRateChamp = champions[champList[0]];
     var secondWinRateChamp = champions[champList[0]];
     for (i = 0; i < champList.length; i++) {
