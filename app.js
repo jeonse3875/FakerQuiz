@@ -296,6 +296,14 @@ function generateQuiz() {
     info = `${fakerData.name}의 LCK 경기 당 데스 : ${lckDM}`;
     generateOX(quizO, quizX, info);
     //#endregion
+
+    //#region LCK KDA 퀴즈 ox
+    var lckKDA = fakerData.lCK.kDA * 1;
+    quizO = `${fakerData.name}의 LCK 통산 KDA는 ${lckKDA + 0.2} 보다 높다.`;
+    quizX = `${fakerData.name}의 LCK 통산 KDA는 ${lckKDA - 0.2} 보다 높다.`;
+    info = `${fakerData.name}의 LCK 통산 KDA : ${lckKDA}`;
+    generateOX(quizO, quizX, info);
+    //#endregion
 }
 
 function generateOX(quizO, quizX, moreInfo) {
