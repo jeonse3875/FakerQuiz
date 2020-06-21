@@ -20,6 +20,7 @@ const version = '0.1';
 const dataFileName = 'data.json';
 
 var fakerData = {};
+var quizList = [];
 
 async function checkData() {
     try {
@@ -54,6 +55,8 @@ async function checkData() {
             console.log(exception);
         }
     }
+
+    generateQuiz();
 
     return new Promise(function (resolve, reject) {
         resolve();
@@ -213,8 +216,56 @@ async function getData() {
     });
 }
 
+function generateQuiz() {
+    quizList = [];
+    //#region 최근 LCK 모스트픽 ox
+    var mostList = [];
+    mostList = fakerData.recentLCK.most;
+    var quizO = `${fakerData.name}의 '${fakerData.recentLCK.name}' 모스트 픽은 '${mostList[0].champion}'이다.`;
+    var quizX = `${fakerData.name}의 '${fakerData.recentLCK.name}' 모스트 픽은 '${mostList[2].champion}'이다.`;
+    var info = `${fakerData.name}는 '${fakerData.recentLCK.name}'에서 '${mostList[0].champion}'을 가장 많이 플레이했습니다. (${mostList[0].played}게임)`;
+    generateOX(quizO,quizX,info);
+    //#endregion
+
+    //#region 최근 LCK 승률 비교 ox
+    var lckWinRate = fakerData.recentLCK.comparison_WinRate.split(' ')[0];
+    var recentWinRate = fakerData.recentLCK.comparison_WinRate.split(' ')[1];
+    if (lckWinRate < recentWinRate) {
+        quizO = `${fakerData.name}의 '${fakerData.recentLCK.name}' 승률은 LCK 통산 승률보다 높다.`;
+        quizX = `${fakerData.name}의 '${fakerData.recentLCK.name}' 승률은 LCK 통산 승률보다 낮다.`;
+    } else {
+        quizO = `${fakerData.name}의 '${fakerData.recentLCK.name}' 승률은 LCK 통산 승률보다 낮다.`;
+        quizX = `${fakerData.name}의 '${fakerData.recentLCK.name}' 승률은 LCK 통산 승률보다 높다.`;
+    }
+    info = `${fakerData.recentLCK.name}' 승률 : ${recentWinRate}\nLCK 통산 승률 : ${lckWinRate}`;
+    generateOX(quizO,quizX,info);
+    //#endregion
+}
+
+function generateOX(quizO, quizX, moreInfo) {
+    var quiz;
+    var ans;
+    var info;
+    info = moreInfo;
+    if (Math.random() > 0.5) {
+        quiz = quizO;
+        ans = 'o';
+    } else {
+        quiz = quizX;
+        ans = 'x';
+    }
+    quiz = '[OX퀴즈] ' + quiz;
+    quizList.push(
+        {
+            quiz: quiz,
+            ans: ans,
+            info: info
+        }
+    );
+}
+
 app.use(bodyParser.json());
-app.post('/hook', function (req, res) {
+app.post('/hook', async function (req, res) {
     var eventObj = req.body.events[0];
     var source = eventObj.source;
     var message = eventObj.message;
@@ -225,12 +276,18 @@ app.post('/hook', function (req, res) {
     console.log('[request source] ', eventObj.source);
     console.log('[request message]', eventObj.message);
     
-    sendMessage(eventObj.replyToken, eventObj.message.text);
+    if (eventObj.message.text == '시작') {
+        await checkData();
+        sendQuiz(eventObj.replyToken);
+    }
 
     res.sendStatus(200);
 });
 
-function sendMessage(replyToken, message) {
+function sendQuiz(replyToken, message) {
+    var randomQuiz = quizList[Math.floor(Math.random()*quizList.length)];
+    var quizText = randomQuiz.quiz;
+
     request.post(
         {
             url: TARGET_URL,
@@ -242,7 +299,7 @@ function sendMessage(replyToken, message) {
                 "messages":[
                     {
                         "type":"text",
-                        "text":"test"
+                        "text":quizText
                     }
                 ]
             }
