@@ -258,6 +258,20 @@ function generateQuiz() {
     info = `${fakerData.recentLCK.name}' KDA : ${recentKDA}\nLCK 통산 KDA : ${lckKDA}`;
     generateOX(quizO,quizX,info);
     //#endregion
+
+    //#region 최근 LCK 킬관여율 비교 ox
+    var lckKP = fakerData.recentLCK.comparison_KP.split(' ')[0];
+    var recentKP = fakerData.recentLCK.comparison_KP.split(' ')[1];
+    if (lckKP < recentKP) {
+        quizO = `${fakerData.name}의 '${fakerData.recentLCK.name}' 킬관여율은 LCK 통산 킬관여율보다 높다.`;
+        quizX = `${fakerData.name}의 '${fakerData.recentLCK.name}' 킬관여율은 LCK 통산 킬관여율보다 낮다.`;
+    } else {
+        quizO = `${fakerData.name}의 '${fakerData.recentLCK.name}' 킬관여율은 LCK 통산 킬관여율보다 낮다.`;
+        quizX = `${fakerData.name}의 '${fakerData.recentLCK.name}' 킬관여율은 LCK 통산 킬관여율보다 높다.`;
+    }
+    info = `${fakerData.recentLCK.name}' KDA : ${recentKP}\nLCK 통산 KDA : ${lckKP}`;
+    generateOX(quizO,quizX,info);
+    //#endregion
 }
 
 function generateOX(quizO, quizX, moreInfo) {
