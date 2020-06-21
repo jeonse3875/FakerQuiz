@@ -371,6 +371,27 @@ function generateQuiz() {
     info = `'${firstPickChamp.name}' : ${firstWinRateChamp.totalGamePlay}게임\n'${secondPickChamp.name}' : ${secondWinRateChamp.totalGamePlay}게임`;
     generateOX(quizO, quizX, info);
     //#endregion
+
+    //#region 모스트 킬관여율 챔피언
+    var firstKPChamp = champions[champList[0]];
+    var secondKPChamp = champions[champList[0]];
+    for (i = 0; i < champList.length; i++) {
+        if (champions[champList[i]].totalGamePlay >= 10) {
+            if (champions[champList[i]].kP > secondKPChamp.kP) {
+                secondKPChamp = champions[champList[i]];
+                if (secondKPChamp.kP > firstKPChamp.kP) {
+                    var temp = secondKPChamp;
+                    secondKPChamp = firstKPChamp;
+                    firstKPChamp = temp;
+                }
+            }
+        }
+    }
+    quizO = `${fakerData.name}가 대회에서 플레이한 챔피언 중 가장 킬관여율이 높은 챔피언은 '${firstKPChamp.name}'이다. (단, 10게임 이상)`;
+    quizX = `${fakerData.name}가 대회에서 플레이한 챔피언 중 가장 킬관여율이 높은 챔피언은 '${secondKPChamp.name}'이다. (단, 10게임 이상)`;
+    info = `'${firstKPChamp.name}' : ${firstKPChamp.kP}\n'${secondKPChamp.name}' : ${secondKPChamp.kP}`;
+    generateOX(quizO, quizX, info);
+    //#endregion
 }
 
 function generateOX(quizO, quizX, moreInfo) {
