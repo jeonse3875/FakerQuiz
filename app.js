@@ -269,7 +269,7 @@ function generateQuiz() {
         quizO = `${fakerData.name}의 '${fakerData.recentLCK.name}' 킬관여율은 LCK 통산 킬관여율보다 낮다.`;
         quizX = `${fakerData.name}의 '${fakerData.recentLCK.name}' 킬관여율은 LCK 통산 킬관여율보다 높다.`;
     }
-    info = `${fakerData.recentLCK.name}' KDA : ${recentKP}\nLCK 통산 KDA : ${lckKP}`;
+    info = `${fakerData.recentLCK.name}' 킬관여율 : ${recentKP}\nLCK 통산 킬관여율 : ${lckKP}`;
     generateOX(quizO,quizX,info);
     //#endregion
 
@@ -299,8 +299,8 @@ function generateQuiz() {
 
     //#region LCK KDA 퀴즈 ox
     var lckKDA = fakerData.lCK.kDA * 1;
-    quizO = `${fakerData.name}의 LCK 통산 KDA는 ${lckKDA + 0.2} 보다 높다.`;
-    quizX = `${fakerData.name}의 LCK 통산 KDA는 ${lckKDA - 0.2} 보다 높다.`;
+    quizO = `${fakerData.name}의 LCK 통산 KDA는 ${(lckKDA + 0.2).toFixed(1)} 보다 높다.`;
+    quizX = `${fakerData.name}의 LCK 통산 KDA는 ${(lckKDA - 0.2).toFixed(1)} 보다 높다.`;
     info = `${fakerData.name}의 LCK 통산 KDA : ${lckKDA}`;
     generateOX(quizO, quizX, info);
     //#endregion
@@ -334,12 +334,32 @@ function generateQuiz() {
         var champIndex = Math.floor(Math.random() * rareChampList.length);
         quizO = `${fakerData.name}는 대회에서 '${rareChampList[champIndex].name}'를 플레이한 적이 있다.`;
         quizX = `${fakerData.name}는 대회에서 '${rareChampList[champIndex].name}'를 플레이한 적이 없다.`;
-        info = `'${rareChampList[champIndex].name}' : ${rareChampList[champIndex].totalGamePlay}게임, 
-        ${rareChampList[champIndex].totalWin}승, ${rareChampList[champIndex].kDA}KDA`;
+        info = `'${rareChampList[champIndex].name}' : ${rareChampList[champIndex].totalGamePlay}게임, ${rareChampList[champIndex].totalWin}승, ${rareChampList[champIndex].kDA}KDA`;
         generateOX(quizO, quizX, info);
     
         champList.splice(champIndex,1);
     }
+    //#endregion
+
+    //#region 모스트 승률 챔피언
+    var firstWinRateChamp = champions[champList[0]];
+    var secondWinRateChamp = champions[champList[0]];
+    for (i = 0; i < champList.length; i++) {
+        if (champions[champList[i]].totalGamePlay >= 10) {
+            if (champions[champList[i]].winRate > secondWinRateChamp.winRate) {
+                secondWinRateChamp = champions[champList[i]];
+                if (secondWinRateChamp.winRate > firstWinRateChamp.winRate) {
+                    var temp = secondWinRateChamp;
+                    secondWinRateChamp = firstWinRateChamp;
+                    firstWinRateChamp = temp;
+                }
+            }
+        }
+    }
+    quizO = `${fakerData.name}가 대회에서 플레이한 챔피언 중 가장 승률이 높은 챔피언은 '${firstWinRateChamp.name}'이다. (단, 10게임 이상)`;
+    quizX = `${fakerData.name}가 대회에서 플레이한 챔피언 중 가장 승률이 높은 챔피언은 '${secondWinRateChamp.name}'이다. (단, 10게임 이상)`;
+    info = `'${firstWinRateChamp.name}' : ${firstWinRateChamp.winRate}\n'${secondWinRateChamp.name}' : ${secondWinRateChamp.winRate}`;
+    generateOX(quizO, quizX, info);
     //#endregion
 }
 
