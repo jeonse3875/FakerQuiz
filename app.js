@@ -363,7 +363,16 @@ function generateQuiz() {
     //#region 모스트 픽 챔피언
     var firstPickChamp = champions[champList[0]];
     var secondPickChamp = champions[champList[1]];
-
+    for (i = 0; i < champList.length; i++) {
+        if (champions[champList[i]] > secondPickChamp.totalGamePlay) {
+            secondPickChamp = champions[champList[i]];
+            if (secondPickChamp.totalGamePlay > firstPickChamp.totalGamePlay) {
+                var temp = secondPickChamp;
+                secondPickChamp = firstPickChamp;
+                firstPickChamp = temp;
+            }
+        }
+    }
     quizO = `${fakerData.name}가 대회에서 가장 많이 플레이한 챔피언은 '${firstPickChamp.name}'이다.`;
     quizX = `${fakerData.name}가 대회에서 가장 많이 플레이한 챔피언은 '${secondPickChamp.name}'이다.`;
     info = `1위. '${firstPickChamp.name}' : ${firstPickChamp.totalGamePlay}게임\n2위. '${secondPickChamp.name}' : ${secondPickChamp.totalGamePlay}게임`;
