@@ -21,6 +21,8 @@ const dataFileName = 'data.json';
 
 var fakerData = {};
 var quizList = [];
+var isWaitAns = false;
+var users = {};
 
 async function checkData() {
     try {
@@ -276,15 +278,25 @@ app.post('/hook', async function (req, res) {
     console.log('[request source] ', eventObj.source);
     console.log('[request message]', eventObj.message);
     
-    if (eventObj.message.text == '시작') {
+    if (!isWaitAns && eventObj.message.text == '시작') {
         await checkData();
-        sendQuiz(eventObj.replyToken);
+        users[eventObj.source.userId] = {
+            streak: 0,
+            quizAns: null,
+            quizInfo: null
+        };
+        sendQuiz(eventObj.replyToken, eventObj.source.userId);
+    } else if (isWaitAns && eventObj.message.text == '정답') {
+        users[eventObj.source.userId].streak ++;
+        sendQuiz(eventObj.replyToken, eventObj.source.userId);
+    } else if (isWaitAns && eventObj.message.text == '오답') {
+        endQuiz(eventObj.replyToken, eventObj.source.userId);
     }
 
     res.sendStatus(200);
 });
 
-function sendQuiz(replyToken, message) {
+function sendQuiz(replyToken, id) {
     var randomQuiz = quizList[Math.floor(Math.random()*quizList.length)];
     var quizText = randomQuiz.quiz;
 
@@ -300,6 +312,32 @@ function sendQuiz(replyToken, message) {
                     {
                         "type":"text",
                         "text":quizText
+                    }
+                ]
+            }
+        },(error, response, body) => {
+            console.log(body)
+        }
+    );
+
+    isWaitAns = true;
+}
+
+function endQuiz(replyToken, id) {
+    isWaitAns = false;
+
+    request.post(
+        {
+            url: TARGET_URL,
+            headers: {
+                'Authorization': `Bearer ${TOKEN}`
+            },
+            json: {
+                "replyToken":replyToken,
+                "messages":[
+                    {
+                        "type":"text",
+                        "text":`${users[id].streak}문제 연속 정답!`
                     }
                 ]
             }
