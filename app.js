@@ -297,8 +297,8 @@ function generateQuiz() {
 
     //#region LCK KDA 퀴즈 ox
     var lckKDA = fakerData.lCK.kDA * 1;
-    quizO = `${fakerData.name}의 LCK 통산 KDA는 ${(lckKDA + 0.2).toFixed(1)} 보다 높다.`;
-    quizX = `${fakerData.name}의 LCK 통산 KDA는 ${(lckKDA - 0.2).toFixed(1)} 보다 높다.`;
+    quizO = `${fakerData.name}의 LCK 통산 KDA는 ${(lckKDA - 0.2).toFixed(1)} 보다 높다.`;
+    quizX = `${fakerData.name}의 LCK 통산 KDA는 ${(lckKDA + 0.2).toFixed(1)} 보다 높다.`;
     info = `${fakerData.name}의 LCK 통산 KDA : ${lckKDA}`;
     generateOX(quizO, quizX, info);
     //#endregion
@@ -328,7 +328,7 @@ function generateQuiz() {
             rareChampList.push(champions[champList[i]]);
         }
     }
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < 3; i++) {
         var champIndex = Math.floor(Math.random() * rareChampList.length);
         quizO = `${fakerData.name}는 대회에서 '${rareChampList[champIndex].name}'를 플레이한 적이 있다.`;
         quizX = `${fakerData.name}는 대회에서 '${rareChampList[champIndex].name}'를 플레이한 적이 없다.`;
