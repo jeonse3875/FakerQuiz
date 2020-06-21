@@ -4,7 +4,7 @@ const app = express();
 
 const axios = require('axios');
 const cheerio = require('cheerio');
-const url = 'http://lol.inven.co.kr/dataninfo/proteam/progamer.php?code=116';// ***url of Other player (if you want)***
+const url = 'http://lol.inven.co.kr/dataninfo/proteam/progamer.php?code=135';// ***url of Other player (if you want)***
 
 const request = require('request');
 const TARGET_URL = 'https://api.line.me/v2/bot/message/reply';
@@ -15,7 +15,7 @@ const domain = "";// ***Your Domain***
 const sslport = 23023;
 const bodyParser = require('body-parser');
 
-const version = '1.21';
+const version = '1.22';
 const dataFileName = 'data.json';
 
 var fakerData = {};
