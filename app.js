@@ -4,14 +4,14 @@ const app = express();
 
 const axios = require('axios');
 const cheerio = require('cheerio');
-const url = 'http://lol.inven.co.kr/dataninfo/proteam/progamer.php?code=135';
+const url = 'http://lol.inven.co.kr/dataninfo/proteam/progamer.php?code=135';// ***url of Other player (if you want)***
 
 const request = require('request');
 const TARGET_URL = 'https://api.line.me/v2/bot/message/reply';
-const TOKEN = 'ihoYpWsdObaqmCnQ7nqwBfSGiLV4v3OZSqccIK9osz9y9pOMiKgEpmJ8fHiiBT0rF5wZoa2bRGTQjZ7al4yseviaYPsROO4nyiygZi8lvW2xcD6yakxXZ91eNmzz8e6fQ32IPZ577Iagx/kEQ/UMgAdB04t89/1O/w1cDnyilFU=';
+const TOKEN = "";// ***Your Channel Access Token*** 
 const path = require('path');
 const HTTPS = require('https');
-const domain = "www.sekechatbot.tk"
+const domain = "";// ***Your Domain***
 const sslport = 23023;
 const bodyParser = require('body-parser');
 
