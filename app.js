@@ -304,6 +304,14 @@ function generateQuiz() {
     info = `${fakerData.name}의 LCK 통산 KDA : ${lckKDA}`;
     generateOX(quizO, quizX, info);
     //#endregion
+
+    //#region LCK 킬관여율 퀴즈 ox
+    var lckKP = fakerData.lCK.kP.replace('%','')*1;
+    quizO = `${fakerData.name}의 LCK 통산 킬관여율은 ${parseInt(lckKP/10)*10}% 이상이다.`;
+    quizX = `${fakerData.name}의 LCK 통산 킬관여율은 ${parseInt(lckKP/10)*10 + 10}% 이상이다.`;
+    info = `${fakerData.name}의 LCK 통산 킬관여율 : ${lckKP}%`;
+    generateOX(quizO, quizX, info);
+    //#endregion
 }
 
 function generateOX(quizO, quizX, moreInfo) {
