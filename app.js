@@ -356,7 +356,7 @@ function generateQuiz() {
     }
     quizO = `${fakerData.name}가 대회에서 플레이한 챔피언 중 가장 승률이 높은 챔피언은 '${firstWinRateChamp.name}'이다. (단, 10게임 이상)`;
     quizX = `${fakerData.name}가 대회에서 플레이한 챔피언 중 가장 승률이 높은 챔피언은 '${secondWinRateChamp.name}'이다. (단, 10게임 이상)`;
-    info = `'${firstWinRateChamp.name}' : ${firstWinRateChamp.winRate}\n'${secondWinRateChamp.name}' : ${secondWinRateChamp.winRate}`;
+    info = `1위. '${firstWinRateChamp.name}' : ${firstWinRateChamp.winRate}\n2위. '${secondWinRateChamp.name}' : ${secondWinRateChamp.winRate}`;
     generateOX(quizO, quizX, info);
     //#endregion
 
@@ -364,9 +364,9 @@ function generateQuiz() {
     var firstPickChamp = champions[champList[0]];
     var secondPickChamp = champions[champList[1]];
 
-    quizO = `${fakerData.name}가 대회에서 가장 많이 플레이한 챔피언은 '${firstPickChamp.name}'이다. (단, 10게임 이상)`;
-    quizX = `${fakerData.name}가 대회에서 가장 많이 플레이한 챔피언은 '${secondPickChamp.name}'이다. (단, 10게임 이상)`;
-    info = `'${firstPickChamp.name}' : ${firstWinRateChamp.totalGamePlay}게임\n'${secondPickChamp.name}' : ${secondWinRateChamp.totalGamePlay}게임`;
+    quizO = `${fakerData.name}가 대회에서 가장 많이 플레이한 챔피언은 '${firstPickChamp.name}'이다.`;
+    quizX = `${fakerData.name}가 대회에서 가장 많이 플레이한 챔피언은 '${secondPickChamp.name}'이다.`;
+    info = `1위. '${firstPickChamp.name}' : ${firstPickChamp.totalGamePlay}게임\n2위. '${secondPickChamp.name}' : ${secondPickChamp.totalGamePlay}게임`;
     generateOX(quizO, quizX, info);
     //#endregion
 
@@ -387,7 +387,7 @@ function generateQuiz() {
     }
     quizO = `${fakerData.name}가 대회에서 플레이한 챔피언 중 가장 킬관여율이 높은 챔피언은 '${firstKPChamp.name}'이다. (단, 10게임 이상)`;
     quizX = `${fakerData.name}가 대회에서 플레이한 챔피언 중 가장 킬관여율이 높은 챔피언은 '${secondKPChamp.name}'이다. (단, 10게임 이상)`;
-    info = `'${firstKPChamp.name}' : ${firstKPChamp.kP}\n'${secondKPChamp.name}' : ${secondKPChamp.kP}`;
+    info = `1위. '${firstKPChamp.name}' : ${firstKPChamp.kP}\n2위. '${secondKPChamp.name}' : ${secondKPChamp.kP}`;
     generateOX(quizO, quizX, info);
     //#endregion
 }
