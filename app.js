@@ -312,6 +312,14 @@ function generateQuiz() {
     info = `${fakerData.name}의 LCK 통산 킬관여율 : ${lckKP}%`;
     generateOX(quizO, quizX, info);
     //#endregion
+
+    //#region LCK 승률 퀴즈 ox
+    var lckWR = fakerData.lCK.winRate.replace('%','')*1;
+    quizO = `${fakerData.name}의 LCK 통산 승률은 ${parseInt(lckWR/10)*10}% 이상이다.`;
+    quizX = `${fakerData.name}의 LCK 통산 승률은 ${parseInt(lckWR/10)*10 + 10}% 이상이다.`;
+    info = `${fakerData.name}의 LCK 통산 승률 : ${lckWR}%`;
+    generateOX(quizO, quizX, info);
+    //#endregion
 }
 
 function generateOX(quizO, quizX, moreInfo) {
