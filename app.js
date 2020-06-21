@@ -23,6 +23,8 @@ var fakerData = {};
 var quizList = [];
 var isWaitAns = false;
 var users = {};
+var sumOfStreak = 0;
+var sumOfTry = 0;
 
 async function checkData() {
     try {
@@ -285,11 +287,11 @@ app.post('/hook', async function (req, res) {
             quizAns: null,
             quizInfo: null
         };
-        sendQuiz(eventObj.replyToken, eventObj.source.userId);
+        sendQuiz(eventObj.replyToken, eventObj.source.userId, true);
     } else if (isWaitAns) {
         if (checkAns(eventObj.source.userId, eventObj.message.text)) {
             users[eventObj.source.userId].streak++;
-            sendQuiz(eventObj.replyToken, eventObj.source.userId);
+            sendQuiz(eventObj.replyToken, eventObj.source.userId, false);
         } else {
             endQuiz(eventObj.replyToken, eventObj.source.userId);
         }
@@ -298,13 +300,32 @@ app.post('/hook', async function (req, res) {
     res.sendStatus(200);
 });
 
-function sendQuiz(replyToken, id) {
+function sendQuiz(replyToken, id, isInit) {
     var randomQuiz = quizList[Math.floor(Math.random()*quizList.length)];
     var quizText = randomQuiz.quiz;
-
+    var messages;
     users[id].quizAns = randomQuiz.ans;
     users[id].quizInfo = randomQuiz.info;
 
+    if (isInit) {
+        messages = [
+            {
+                "type":"text",
+                "text":quizText
+            }
+        ];
+    } else {
+        messages = [
+            {
+                "type":"text",
+                "text":'정답입니다.'
+            },
+            {
+                "type":"text",
+                "text":quizText
+            }
+        ];
+    }
     request.post(
         {
             url: TARGET_URL,
@@ -313,12 +334,7 @@ function sendQuiz(replyToken, id) {
             },
             json: {
                 "replyToken":replyToken,
-                "messages":[
-                    {
-                        "type":"text",
-                        "text":quizText
-                    }
-                ]
+                "messages": messages
             }
         },(error, response, body) => {
             console.log(body)
@@ -338,7 +354,9 @@ function checkAns(id, ans) {
 
 function endQuiz(replyToken, id) {
     isWaitAns = false;
-
+    sumOfTry++;
+    sumOfStreak += users[id].streak;
+    var averageStreak = sumOfStreak/sumOfTry;
     request.post(
         {
             url: TARGET_URL,
@@ -350,7 +368,19 @@ function endQuiz(replyToken, id) {
                 "messages":[
                     {
                         "type":"text",
-                        "text":`${users[id].streak}문제 연속 정답!`
+                        "text":"오답입니다."
+                    },
+                    {
+                        "type":"text",
+                        "text":users[id].quizInfo
+                    },
+                    {
+                        "type":"text",
+                        "text":`${users[id].streak}문제 연속 정답!\n(유저 평균 : ${averageStreak.toFixed(1)}문제)`
+                    },
+                    {
+                        "type":"text",
+                        "text":"퀴즈를 다시 시작하려면 '시작'을 입력해주세요."
                     }
                 ]
             }
