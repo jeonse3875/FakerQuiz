@@ -50,9 +50,10 @@ $ node app.js
 **6.** LINE 채널을 친구추가하고 작동을 확인합니다.<br>
 
 ### 3-2. 다른 선수의 퀴즈 만들기
-**1.** [롤 인벤 기록실](http://lol.inven.co.kr/dataninfo/match/playerList.php)에서 원하는 선수의 기록실 링크를 복사합니다.<br>
-**2.** `app.js`에서 `url`을 복사한 링크로 교체합니다.<br>
-**3.** [3-1](http://khuhub.khu.ac.kr/2019102225/FakerQuiz#3-1-%EC%8B%A4%ED%96%89-%EB%B0%A9%EB%B2%95)의 실행 과정을 수행합니다.<br>
+**1.** 기존에 크롤링한 `data.json`이 있다면 삭제합니다.<br>
+**2.** [롤 인벤 기록실](http://lol.inven.co.kr/dataninfo/match/playerList.php)에서 원하는 선수의 기록실 링크를 복사합니다.<br>
+**3.** `app.js`에서 `url`을 복사한 링크로 교체합니다.<br>
+**4.** [3-1](http://khuhub.khu.ac.kr/2019102225/FakerQuiz#3-1-%EC%8B%A4%ED%96%89-%EB%B0%A9%EB%B2%95)의 실행 과정을 수행합니다.<br>
 
 ## 4. 라이센스
 MIT License에 따라 배포됩니다. 자세한 내용은 `LICENSE`를 확인하세요.<br>
