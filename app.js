@@ -244,6 +244,20 @@ function generateQuiz() {
     info = `${fakerData.recentLCK.name}' 승률 : ${recentWinRate}\nLCK 통산 승률 : ${lckWinRate}`;
     generateOX(quizO,quizX,info);
     //#endregion
+
+    //#region 최근 LCK KDA 비교 ox
+    var lckKDA = fakerData.recentLCK.comparison_KDA.split(' ')[0];
+    var recentKDA = fakerData.recentLCK.comparison_KDA.split(' ')[1];
+    if (lckKDA < recentKDA) {
+        quizO = `${fakerData.name}의 '${fakerData.recentLCK.name}' KDA는 LCK 통산 KDA보다 높다.`;
+        quizX = `${fakerData.name}의 '${fakerData.recentLCK.name}' KDA는 LCK 통산 KDA보다 낮다.`;
+    } else {
+        quizO = `${fakerData.name}의 '${fakerData.recentLCK.name}' KDA는 LCK 통산 KDA보다 낮다.`;
+        quizX = `${fakerData.name}의 '${fakerData.recentLCK.name}' KDA는 LCK 통산 KDA보다 높다.`;
+    }
+    info = `${fakerData.recentLCK.name}' KDA : ${recentKDA}\nLCK 통산 KDA : ${lckKDA}`;
+    generateOX(quizO,quizX,info);
+    //#endregion
 }
 
 function generateOX(quizO, quizX, moreInfo) {
