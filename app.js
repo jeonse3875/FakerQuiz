@@ -15,7 +15,7 @@ const domain = "";// ***Your Domain***
 const sslport = 23023;
 const bodyParser = require('body-parser');
 
-const version = '1.0';
+const version = '1.1';
 const dataFileName = 'data.json';
 
 var fakerData = {};
