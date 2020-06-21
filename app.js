@@ -291,23 +291,18 @@ function generateQuiz() {
 }
 
 function generateOX(quizO, quizX, moreInfo) {
-    var quiz;
-    var ans;
-    var info;
-    info = moreInfo;
-    if (Math.random() > 0.5) {
-        quiz = quizO;
-        ans = 'o';
-    } else {
-        quiz = quizX;
-        ans = 'x';
-    }
-    quiz = '[OX퀴즈] ' + quiz;
     quizList.push(
         {
-            quiz: quiz,
-            ans: ans,
-            info: info
+            quiz: '[OX퀴즈] ' + quizO,
+            ans: 'o',
+            info: moreInfo
+        }
+    );
+    quizList.push(
+        {
+            quiz: '[OX퀴즈] ' + quizX,
+            ans: 'x',
+            info: moreInfo
         }
     );
 }
