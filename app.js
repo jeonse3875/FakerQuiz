@@ -536,6 +536,7 @@ function endQuiz(replyToken, id) {
             console.log(body)
         }
     );
+    users[id].streak = 0;
 }
 
 try {
