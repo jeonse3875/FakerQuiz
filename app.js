@@ -20,7 +20,6 @@ const dataFileName = 'data.json';
 
 var fakerData = {};
 var quizList = [];
-var isWaitAns = false;
 var users = {};
 var sumOfStreak = 0;
 var sumOfTry = 0;
@@ -421,23 +420,28 @@ app.post('/hook', async function (req, res) {
     // request log
     console.log('======================', new Date(), '======================');
     console.log('[request]', req.body);
-    console.log('[request source] ', eventObj.source);
-    console.log('[request message]', eventObj.message);
+    console.log('[request source] ', source);
+    console.log('[request message]', message);
 
-    if (!isWaitAns && eventObj.message.text == '시작') {
-        await checkData();
-        users[eventObj.source.userId] = {
+    if (!users.hasOwnProperty(source.userId)) {
+        users[source.userId] = {
+            isWaitingAns: false,
             streak: 0,
             quizAns: null,
             quizInfo: null
         };
-        sendQuiz(eventObj.replyToken, eventObj.source.userId, true);
-    } else if (isWaitAns) {
-        if (checkAns(eventObj.source.userId, eventObj.message.text)) {
-            users[eventObj.source.userId].streak++;
-            sendQuiz(eventObj.replyToken, eventObj.source.userId, false);
+    }
+
+    if (!users[source.userId].isWaitingAns && message.text == '시작') {
+        await checkData();
+        
+        sendQuiz(eventObj.replyToken, source.userId, true);
+    } else if (users[source.userId].isWaitingAns) {
+        if (checkAns(source.userId, message.text)) {
+            users[source.userId].streak++;
+            sendQuiz(eventObj.replyToken, source.userId, false);
         } else {
-            endQuiz(eventObj.replyToken, eventObj.source.userId);
+            endQuiz(eventObj.replyToken, source.userId);
         }
     }
 
@@ -485,7 +489,7 @@ function sendQuiz(replyToken, id, isInit) {
         }
     );
 
-    isWaitAns = true;
+    users[id].isWaitingAns = true;
 }
 
 function checkAns(id, ans) {
@@ -497,7 +501,7 @@ function checkAns(id, ans) {
 }
 
 function endQuiz(replyToken, id) {
-    isWaitAns = false;
+    users[id].isWaitingAns = false;
     sumOfTry++;
     sumOfStreak += users[id].streak;
     var averageStreak = sumOfStreak / sumOfTry;
